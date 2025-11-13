@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Lightbulb, TrendingUp, AlertCircle, Sparkles } from "lucide-react";
+import { Lightbulb, TrendingUp, AlertCircle, Sparkles, BookOpen, PiggyBank, Target } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const insights = [
   {
@@ -8,21 +9,66 @@ const insights = [
     type: "warning",
     title: "Gastos com Alimentação Aumentaram 25%",
     description: "Seus gastos com alimentação fora de casa aumentaram significativamente. Considere preparar mais refeições em casa.",
-    impact: "Economia potencial: R$ 300/mês"
+    impact: "Economia potencial: R$ 300/mês",
+    details: "Nos últimos 30 dias, você gastou R$ 450 com delivery e R$ 600 em restaurantes. Planeje suas refeições semanalmente e experimente preparar marmitas. Isso pode reduzir seus gastos em até 40%.",
+    actionItems: [
+      "Planeje um cardápio semanal",
+      "Faça compras em horários estratégicos",
+      "Prepare refeições em lote nos fins de semana",
+      "Use aplicativos de receitas econômicas"
+    ]
   },
   {
     id: 2,
     type: "success",
     title: "Parabéns! Meta de Poupança Atingida",
     description: "Você conseguiu poupar mais do que sua meta este mês. Continue assim!",
-    impact: "Você está 15% acima da meta"
+    impact: "Você está 15% acima da meta",
+    details: "Sua disciplina financeira está excelente! Você economizou R$ 920 este mês, superando sua meta de R$ 800. Considere aumentar gradualmente sua meta de poupança.",
+    actionItems: [
+      "Mantenha o controle atual",
+      "Considere aumentar a meta em 5-10%",
+      "Explore opções de investimento",
+      "Celebre suas conquistas!"
+    ]
   },
   {
     id: 3,
     type: "tip",
     title: "Oportunidade de Economia em Assinaturas",
     description: "Você tem 3 assinaturas ativas que não usou nos últimos 30 dias. Considere cancelá-las.",
-    impact: "Economia potencial: R$ 89,90/mês"
+    impact: "Economia potencial: R$ 89,90/mês",
+    details: "Identificamos assinaturas sem uso: Streaming de música (R$ 24,90), App de notícias (R$ 35,00) e Academia online (R$ 30,00). Avalie se você realmente precisa manter todas elas.",
+    actionItems: [
+      "Cancele assinaturas não utilizadas",
+      "Configure alertas de cobrança",
+      "Compartilhe planos familiares quando possível",
+      "Reavalie suas assinaturas trimestralmente"
+    ]
+  }
+];
+
+const educationalContent = [
+  {
+    id: 1,
+    icon: PiggyBank,
+    title: "Regra 50-30-20",
+    description: "Método eficaz de distribuição de renda",
+    content: "A regra 50-30-20 é um método simples de orçamento: 50% da sua renda para necessidades essenciais (moradia, alimentação, transporte), 30% para desejos (lazer, restaurantes, hobbies) e 20% para poupança e investimentos. Este método ajuda a manter equilíbrio financeiro e construir patrimônio."
+  },
+  {
+    id: 2,
+    icon: Target,
+    title: "Como Definir Metas Financeiras",
+    description: "Estabeleça objetivos realistas e alcançáveis",
+    content: "Metas financeiras eficazes devem ser SMART: Específicas, Mensuráveis, Atingíveis, Relevantes e Temporais. Comece com metas de curto prazo (até 1 ano), como criar um fundo de emergência. Depois, avance para metas de médio (1-5 anos) e longo prazo (5+ anos), como aposentadoria."
+  },
+  {
+    id: 3,
+    icon: BookOpen,
+    title: "Fundo de Emergência",
+    description: "Sua rede de segurança financeira",
+    content: "O fundo de emergência é essencial para segurança financeira. Recomenda-se guardar de 3 a 6 meses de despesas básicas em uma aplicação de alta liquidez. Comece pequeno: mesmo R$ 50 por mês já é um início. Este fundo protege você de imprevistos como desemprego, problemas de saúde ou reparos urgentes."
   }
 ];
 
@@ -76,6 +122,7 @@ export default function Insights() {
 
       {/* Insights List */}
       <div className="space-y-4">
+        <h2 className="text-xl font-semibold">Análises Detalhadas</h2>
         {insights.map((insight) => {
           const Icon = 
             insight.type === "warning" ? AlertCircle :
@@ -108,10 +155,32 @@ export default function Insights() {
                   <span className={`text-sm font-medium ${colorClass}`}>
                     {insight.impact}
                   </span>
-                  <Button variant="outline" size="sm">
-                    Ver Detalhes
-                  </Button>
                 </div>
+              </CardContent>
+              <CardContent className="pt-0">
+                <Accordion type="single" collapsible>
+                  <AccordionItem value="details" className="border-0">
+                    <AccordionTrigger className="text-sm hover:no-underline">
+                      Ver análise detalhada
+                    </AccordionTrigger>
+                    <AccordionContent className="space-y-4">
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {insight.details}
+                      </p>
+                      <div>
+                        <p className="text-sm font-medium mb-2">Ações recomendadas:</p>
+                        <ul className="space-y-1">
+                          {insight.actionItems.map((item, idx) => (
+                            <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                              <span className="text-primary mt-1">•</span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </CardContent>
             </Card>
           );
@@ -119,43 +188,50 @@ export default function Insights() {
       </div>
 
       {/* Educational Content */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Educação Financeira</CardTitle>
-          <CardDescription>Dicas para melhorar sua gestão financeira</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-3">
-            <div className="flex gap-3 p-3 rounded-lg bg-muted/50">
-              <span className="text-2xl">📚</span>
-              <div>
-                <h3 className="font-semibold mb-1">Regra 50-30-20</h3>
-                <p className="text-sm text-muted-foreground">
-                  Destine 50% da renda para necessidades, 30% para desejos e 20% para poupança e investimentos.
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-3 p-3 rounded-lg bg-muted/50">
-              <span className="text-2xl">💰</span>
-              <div>
-                <h3 className="font-semibold mb-1">Fundo de Emergência</h3>
-                <p className="text-sm text-muted-foreground">
-                  Mantenha de 3 a 6 meses de despesas guardadas para imprevistos. Este deve ser seu primeiro objetivo.
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-3 p-3 rounded-lg bg-muted/50">
-              <span className="text-2xl">🎯</span>
-              <div>
-                <h3 className="font-semibold mb-1">Metas SMART</h3>
-                <p className="text-sm text-muted-foreground">
-                  Defina metas Específicas, Mensuráveis, Atingíveis, Relevantes e com prazo definido (Temporais).
-                </p>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-semibold flex items-center gap-2">
+            <BookOpen className="h-5 w-5 text-accent" />
+            Educação Financeira
+          </h2>
+        </div>
+        <div className="grid gap-4 md:grid-cols-3">
+          {educationalContent.map((content) => {
+            const Icon = content.icon;
+            return (
+              <Card key={content.id}>
+                <CardHeader>
+                  <div className="flex items-start gap-3">
+                    <div className="rounded-lg bg-accent/10 p-2">
+                      <Icon className="h-5 w-5 text-accent" />
+                    </div>
+                    <div className="flex-1">
+                      <CardTitle className="text-base">{content.title}</CardTitle>
+                      <CardDescription className="text-xs mt-1">
+                        {content.description}
+                      </CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <Accordion type="single" collapsible>
+                    <AccordionItem value="content" className="border-0">
+                      <AccordionTrigger className="text-sm hover:no-underline py-2">
+                        Ler mais
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {content.content}
+                        </p>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }

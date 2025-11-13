@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,6 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus, Search, ArrowUpCircle, ArrowDownCircle } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { useLocation } from "react-router-dom";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const mockTransactions = [
   { id: 1, date: "2025-11-10", description: "Supermercado", category: "Alimentação", amount: -250.00, type: "expense" },
@@ -16,13 +18,31 @@ const mockTransactions = [
 ];
 
 export default function Transactions() {
+  const location = useLocation();
   const [searchTerm, setSearchTerm] = useState("");
+  const [filterType, setFilterType] = useState<"all" | "income" | "expense">("all");
+  
+  useEffect(() => {
+    if (location.state?.filterCategory) {
+      setSearchTerm(location.state.filterCategory);
+    }
+  }, [location]);
 
-  const filteredTransactions = mockTransactions.filter(
-    (t) =>
+  const filteredTransactions = mockTransactions.filter((t) => {
+    const matchesSearch = 
       t.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      t.category.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+      t.category.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesType = filterType === "all" || t.type === filterType;
+    return matchesSearch && matchesType;
+  });
+
+  const totalIncome = mockTransactions
+    .filter((t) => t.type === "income")
+    .reduce((sum, t) => sum + t.amount, 0);
+  
+  const totalExpense = mockTransactions
+    .filter((t) => t.type === "expense")
+    .reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
   return (
     <div className="space-y-6">
@@ -92,9 +112,47 @@ export default function Transactions() {
         </Dialog>
       </div>
 
+      {/* Summary Cards */}
+      <div className="grid gap-4 md:grid-cols-2">
+        <Card className="border-success/50 bg-success/5">
+          <CardHeader className="pb-3">
+            <CardDescription className="text-success">Total de Receitas</CardDescription>
+            <CardTitle className="text-3xl text-success">
+              R$ {totalIncome.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">
+              {mockTransactions.filter(t => t.type === "income").length} transações de receita
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-destructive/50 bg-destructive/5">
+          <CardHeader className="pb-3">
+            <CardDescription className="text-destructive">Total de Despesas</CardDescription>
+            <CardTitle className="text-3xl text-destructive">
+              R$ {totalExpense.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">
+              {mockTransactions.filter(t => t.type === "expense").length} transações de despesa
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
       <Card>
         <CardHeader>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col gap-4">
+            <Tabs value={filterType} onValueChange={(v) => setFilterType(v as any)} className="w-full">
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="all">Todas</TabsTrigger>
+                <TabsTrigger value="income">Receitas</TabsTrigger>
+                <TabsTrigger value="expense">Despesas</TabsTrigger>
+              </TabsList>
+            </Tabs>
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input

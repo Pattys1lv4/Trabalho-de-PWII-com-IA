@@ -1,48 +1,58 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, ShoppingBag, Car, Home, Smile, MoreHorizontal } from "lucide-react";
+import { Plus, ShoppingBag, Car, Home, Smile, MoreHorizontal, UtensilsCrossed, Bus, Building2, Gamepad2, ShoppingCart } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
 const categories = [
   { 
     id: 1, 
     name: "Alimentação", 
-    icon: ShoppingBag, 
+    icon: UtensilsCrossed,
+    image: "🍔",
     spent: 1200, 
     budget: 1500,
-    color: "hsl(var(--chart-1))"
+    color: "hsl(var(--chart-1))",
+    description: "Supermercado, restaurantes e delivery"
   },
   { 
     id: 2, 
     name: "Transporte", 
-    icon: Car, 
+    icon: Bus,
+    image: "🚗",
     spent: 800, 
     budget: 900,
-    color: "hsl(var(--chart-2))"
+    color: "hsl(var(--chart-2))",
+    description: "Uber, combustível e transporte público"
   },
   { 
     id: 3, 
     name: "Moradia", 
-    icon: Home, 
+    icon: Building2,
+    image: "🏠",
     spent: 2000, 
     budget: 2000,
-    color: "hsl(var(--chart-3))"
+    color: "hsl(var(--chart-3))",
+    description: "Aluguel, condomínio e contas da casa"
   },
   { 
     id: 4, 
     name: "Lazer", 
-    icon: Smile, 
+    icon: Gamepad2,
+    image: "🎮",
     spent: 500, 
     budget: 600,
-    color: "hsl(var(--chart-4))"
+    color: "hsl(var(--chart-4))",
+    description: "Cinema, streaming e entretenimento"
   },
   { 
     id: 5, 
     name: "Outros", 
-    icon: MoreHorizontal, 
+    icon: ShoppingCart,
+    image: "🛍️",
     spent: 300, 
     budget: 400,
-    color: "hsl(var(--chart-5))"
+    color: "hsl(var(--chart-5))",
+    description: "Compras e despesas diversas"
   },
 ];
 
@@ -60,32 +70,38 @@ export default function Categories() {
         </Button>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {categories.map((category) => {
           const percentage = (category.spent / category.budget) * 100;
           const Icon = category.icon;
           
           return (
-            <Card key={category.id}>
+            <Card key={category.id} className="overflow-hidden">
+              <div 
+                className="h-32 flex items-center justify-center text-6xl relative"
+                style={{ backgroundColor: `${category.color}15` }}
+              >
+                <span>{category.image}</span>
+                <div className="absolute top-2 right-2">
+                  <Icon className="h-5 w-5" style={{ color: category.color }} />
+                </div>
+              </div>
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div 
-                      className="rounded-lg p-2"
-                      style={{ backgroundColor: category.color, opacity: 0.1 }}
-                    >
-                      <Icon className="h-5 w-5" style={{ color: category.color }} />
-                    </div>
-                    <div>
-                      <CardTitle className="text-lg">{category.name}</CardTitle>
-                      <CardDescription>
-                        R$ {category.spent.toLocaleString("pt-BR")} de R$ {category.budget.toLocaleString("pt-BR")}
-                      </CardDescription>
-                    </div>
+                  <div>
+                    <CardTitle className="text-lg">{category.name}</CardTitle>
+                    <CardDescription className="text-xs mt-1">
+                      {category.description}
+                    </CardDescription>
                   </div>
-                  <span className="text-2xl font-bold" style={{ color: category.color }}>
+                  <span className="text-xl font-bold" style={{ color: category.color }}>
                     {percentage.toFixed(0)}%
                   </span>
+                </div>
+                <div className="mt-2">
+                  <p className="text-sm text-muted-foreground">
+                    R$ {category.spent.toLocaleString("pt-BR")} de R$ {category.budget.toLocaleString("pt-BR")}
+                  </p>
                 </div>
               </CardHeader>
               <CardContent>

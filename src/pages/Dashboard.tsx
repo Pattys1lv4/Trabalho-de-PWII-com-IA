@@ -1,6 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 import { TrendingUp, TrendingDown, DollarSign, CreditCard } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 // Mock data - será substituído por dados reais
 const expensesByCategory = [
@@ -21,10 +23,17 @@ const monthlyTrend = [
 ];
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  
   const totalIncome = 5600;
   const totalExpenses = 4800;
   const balance = totalIncome - totalExpenses;
   const savingsRate = ((balance / totalIncome) * 100).toFixed(1);
+
+  const handleCategoryClick = (categoryName: string) => {
+    navigate('/transactions', { state: { filterCategory: categoryName } });
+  };
 
   return (
     <div className="space-y-6">
@@ -101,7 +110,7 @@ export default function Dashboard() {
         <Card>
           <CardHeader>
             <CardTitle>Gastos por Categoria</CardTitle>
-            <CardDescription>Distribuição das despesas do mês</CardDescription>
+            <CardDescription>Clique em uma fatia para ver os detalhes das transações</CardDescription>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
@@ -115,12 +124,17 @@ export default function Dashboard() {
                   outerRadius={80}
                   fill="#8884d8"
                   dataKey="value"
+                  onClick={(data) => handleCategoryClick(data.name)}
+                  className="cursor-pointer transition-opacity hover:opacity-80"
                 >
                   {expensesByCategory.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip formatter={(value) => `R$ ${value}`} />
+                <Tooltip 
+                  formatter={(value) => `R$ ${value}`}
+                  cursor={{ fill: 'transparent' }}
+                />
               </PieChart>
             </ResponsiveContainer>
           </CardContent>
