@@ -81,6 +81,7 @@ export default function Budget() {
       {/* Goals List */}
       <div className="space-y-4">
         <h2 className="text-xl font-semibold">Suas Metas</h2>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {goals.map((goal) => {
           const percentage = (goal.current / goal.target) * 100;
           const daysLeft = Math.ceil(
@@ -128,6 +129,7 @@ export default function Budget() {
             </Card>
           );
         })}
+        </div>
       </div>
 
       {/* Tips Card */}
