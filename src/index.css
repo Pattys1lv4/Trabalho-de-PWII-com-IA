@@ -8,107 +8,139 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 215 25% 15%;
+    --background: 220 25% 97%;
+    --foreground: 220 15% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 215 25% 15%;
+    --card-foreground: 220 15% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 25% 15%;
+    --popover-foreground: 220 15% 10%;
 
-    --primary: 195 85% 40%;
+    --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
+    --primary-glow: 217 91% 70%;
 
-    --secondary: 210 25% 92%;
-    --secondary-foreground: 215 25% 15%;
+    --secondary: 220 15% 95%;
+    --secondary-foreground: 220 15% 10%;
 
-    --muted: 210 25% 95%;
-    --muted-foreground: 215 15% 45%;
+    --muted: 220 15% 96%;
+    --muted-foreground: 220 10% 45%;
 
-    --accent: 142 70% 45%;
+    --accent: 167 80% 50%;
     --accent-foreground: 0 0% 100%;
+    --accent-glow: 167 80% 60%;
 
-    --destructive: 0 70% 55%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --success: 142 70% 45%;
+    --success: 142 76% 45%;
     --success-foreground: 0 0% 100%;
 
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
 
-    --border: 214 25% 88%;
-    --input: 214 25% 88%;
-    --ring: 195 85% 40%;
+    --border: 220 15% 90%;
+    --input: 220 15% 90%;
+    --ring: 217 91% 60%;
 
     --radius: 0.75rem;
 
-    --chart-1: 195 85% 45%;
-    --chart-2: 142 70% 50%;
+    --chart-1: 217 91% 60%;
+    --chart-2: 167 80% 50%;
     --chart-3: 38 92% 55%;
-    --chart-4: 0 70% 60%;
-    --chart-5: 270 65% 60%;
+    --chart-4: 0 84% 60%;
+    --chart-5: 270 70% 60%;
 
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 215 25% 15%;
-    --sidebar-primary: 195 85% 40%;
+    --sidebar-background: 220 20% 98%;
+    --sidebar-foreground: 220 15% 10%;
+    --sidebar-primary: 217 91% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 25% 95%;
-    --sidebar-accent-foreground: 215 25% 15%;
-    --sidebar-border: 214 25% 90%;
-    --sidebar-ring: 195 85% 40%;
+    --sidebar-accent: 220 15% 94%;
+    --sidebar-accent-foreground: 220 15% 10%;
+    --sidebar-border: 220 15% 92%;
+    --sidebar-ring: 217 91% 60%;
+
+    /* Tech gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(167 80% 50%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(220 25% 99%) 100%);
+    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(217 91% 70% / 0.15) 0%, transparent 70%);
+    
+    /* Tech shadows */
+    --shadow-elevated: 0 4px 20px -2px hsl(217 91% 60% / 0.1), 0 0 40px -10px hsl(217 91% 70% / 0.1);
+    --shadow-glow: 0 0 30px hsl(217 91% 70% / 0.3);
+    --shadow-card: 0 2px 10px hsl(220 15% 10% / 0.05);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 
   .dark {
-    --background: 215 30% 8%;
-    --foreground: 210 40% 98%;
+    --background: 220 25% 6%;
+    --foreground: 220 15% 95%;
 
-    --card: 215 28% 12%;
-    --card-foreground: 210 40% 98%;
+    --card: 220 20% 10%;
+    --card-foreground: 220 15% 95%;
 
-    --popover: 215 28% 12%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 220 20% 10%;
+    --popover-foreground: 220 15% 95%;
 
-    --primary: 195 85% 50%;
+    --primary: 217 91% 65%;
     --primary-foreground: 0 0% 100%;
+    --primary-glow: 217 91% 75%;
 
-    --secondary: 215 25% 18%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 220 15% 15%;
+    --secondary-foreground: 220 15% 95%;
 
-    --muted: 215 25% 15%;
-    --muted-foreground: 215 15% 60%;
+    --muted: 220 15% 12%;
+    --muted-foreground: 220 10% 60%;
 
-    --accent: 142 70% 50%;
+    --accent: 167 80% 55%;
     --accent-foreground: 0 0% 100%;
+    --accent-glow: 167 80% 65%;
 
-    --destructive: 0 70% 60%;
+    --destructive: 0 84% 65%;
     --destructive-foreground: 0 0% 100%;
 
-    --success: 142 70% 50%;
+    --success: 142 76% 50%;
     --success-foreground: 0 0% 100%;
 
     --warning: 38 92% 55%;
     --warning-foreground: 0 0% 100%;
 
-    --border: 215 25% 20%;
-    --input: 215 25% 20%;
-    --ring: 195 85% 50%;
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --ring: 217 91% 65%;
 
-    --chart-1: 195 85% 55%;
-    --chart-2: 142 70% 55%;
+    --chart-1: 217 91% 65%;
+    --chart-2: 167 80% 55%;
     --chart-3: 38 92% 60%;
-    --chart-4: 0 70% 65%;
-    --chart-5: 270 65% 65%;
+    --chart-4: 0 84% 65%;
+    --chart-5: 270 70% 65%;
 
-    --sidebar-background: 215 28% 10%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 195 85% 50%;
+    --sidebar-background: 220 20% 8%;
+    --sidebar-foreground: 220 15% 95%;
+    --sidebar-primary: 217 91% 65%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 215 25% 16%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 215 25% 18%;
-    --sidebar-ring: 195 85% 50%;
+    --sidebar-accent: 220 15% 14%;
+    --sidebar-accent-foreground: 220 15% 95%;
+    --sidebar-border: 220 15% 16%;
+    --sidebar-ring: 217 91% 65%;
+
+    /* Tech gradients - Dark */
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 65%) 0%, hsl(167 80% 55%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(220 20% 11%) 0%, hsl(220 20% 9%) 100%);
+    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(217 91% 75% / 0.2) 0%, transparent 70%);
+    
+    /* Tech shadows - Dark */
+    --shadow-elevated: 0 4px 20px -2px hsl(217 91% 65% / 0.3), 0 0 40px -10px hsl(217 91% 75% / 0.3);
+    --shadow-glow: 0 0 40px hsl(217 91% 75% / 0.5);
+    --shadow-card: 0 2px 10px hsl(0 0% 0% / 0.3);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 }
 
@@ -118,6 +150,40 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+@layer utilities {
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .gradient-card {
+    background: var(--gradient-card);
+  }
+  
+  .gradient-glow {
+    background: var(--gradient-glow);
+  }
+  
+  .shadow-elevated {
+    box-shadow: var(--shadow-elevated);
+  }
+  
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+  
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+  
+  .transition-bounce {
+    transition: var(--transition-bounce);
   }
 }
